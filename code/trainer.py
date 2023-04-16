@@ -507,7 +507,7 @@ class GANTrainer(object):
             netG.eval()
             num_batches = int(cfg.TEST.SAMPLE_NUM / self.batch_size)
             cnt = 0
-            for step in xrange(num_batches):
+            for step in range(num_batches):
                 noise.data.normal_(0, 1)
                 fake_imgs, _, _ = netG(noise)
                 if cfg.TEST.B_EXAMPLE:
@@ -873,21 +873,10 @@ class condGANTrainer(object):
                 for i in range(embedding_dim):
                     fake_imgs, _, _ = netG(noise, t_embeddings[:, i, :])
                     if cfg.TEST.B_EXAMPLE:
-                        # fake_img_list.append(fake_imgs[0].data.cpu())
-                        # fake_img_list.append(fake_imgs[1].data.cpu())
                         fake_img_list.append(fake_imgs[2].data.cpu())
                     else:
                         self.save_singleimages(fake_imgs[-1], filenames,
                                                save_dir, split_dir, i, 256)
-                        # self.save_singleimages(fake_imgs[-2], filenames,
-                        #                        save_dir, split_dir, i, 128)
-                        # self.save_singleimages(fake_imgs[-3], filenames,
-                        #                        save_dir, split_dir, i, 64)
-                    # break
                 if cfg.TEST.B_EXAMPLE:
-                    # self.save_superimages(fake_img_list, filenames,
-                    #                       save_dir, split_dir, 64)
-                    # self.save_superimages(fake_img_list, filenames,
-                    #                       save_dir, split_dir, 128)
                     self.save_superimages(fake_img_list, filenames,
                                           save_dir, split_dir, 256)
